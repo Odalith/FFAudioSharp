@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 
-namespace FFaudio.Net;
+namespace FFAudioSharp;
 
 [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(Utf8StringMarshaller))]
 internal static class Utf8StringMarshaller

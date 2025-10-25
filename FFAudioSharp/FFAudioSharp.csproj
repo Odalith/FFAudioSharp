@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+        <!-- NuGet-specific metadata -->
+        <PackageId>Odalith.FFAudioSharp</PackageId>
+        <Version>1.0.4</Version>
+        <Authors>Odalith</Authors>
+        <Description>Play audio with FFmpeg and SDL2 in dotnet</Description>
+        <PackageTags>audio media music playback ffmpeg sdl2</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="docs\readme.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="runtimes\linux-x64\native\" />
+        <Folder Include="runtimes\osx-x64\native\" />
+        <Folder Include="runtimes\win-x64\native\" />
+    </ItemGroup>
+
+<!--    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64' Or '$(RuntimeIdentifier)' == ''">
+      <None Include="runtimes\win-x64\native\mynative.dll">
+        <Pack>true</Pack>
+        <PackagePath>runtimes/win-x64/native/</PackagePath>
+      </None>
+    </ItemGroup>-->
+
+    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64' Or '$(RuntimeIdentifier)' == ''">
+      <None Include="runtimes\linux-x64\native\libffaudio.so">
+        <Pack>true</Pack>
+        <PackagePath>runtimes/linux-x64/native/</PackagePath>
+      </None>
+    </ItemGroup>
+
+<!--    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == ''">
+      <None Include="runtimes\osx-x64\native\libmynative.dylib">
+        <Pack>true</Pack>
+        <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      </None>
+    </ItemGroup>-->
+
+</Project>

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAudioSharp", "FFAudioSharp\FFAudioSharp.csproj", "{86136E89-B058-4C2D-B5A9-6BB78BECFC3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAudioSharp.Tests", "FFAudioSharp.Tests\FFAudioSharp.Tests.csproj", "{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86136E89-B058-4C2D-B5A9-6BB78BECFC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86136E89-B058-4C2D-B5A9-6BB78BECFC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86136E89-B058-4C2D-B5A9-6BB78BECFC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86136E89-B058-4C2D-B5A9-6BB78BECFC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

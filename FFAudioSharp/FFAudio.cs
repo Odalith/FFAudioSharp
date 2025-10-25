@@ -1,11 +1,10 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace FFaudio.Net;
+namespace FFAudioSharp;
 
-internal static partial class FFAudio
+public static partial class FFAudio
 {
     private const string DllName = "ffaudio";
     
@@ -85,136 +84,193 @@ internal static partial class FFAudio
     [StructLayout(LayoutKind.Sequential)]
     public struct PlayAudioConfig
     {
-        // Optional; Seek this many seconds before starting playback. <= 0 == plays from the start
+        /// Optional; Seek this many seconds before starting playback. Less than equal to 0 == plays from the start
         public double SkipSeconds;
-        // Optional; How many seconds to play audio before quiting. <= 0 == plays to the end
+        /// Optional; How many seconds to play audio before quiting. Less than equal to 0 == plays to the end
         public double PlayDuration;
-        // Optional; NULL to disable. Add loudness normalization filter.
-        // Ex: "I=-16:TP=-1.5:LRA=11:measured_I=-8.9:measured_LRA=5.2:measured_TP=1.1:measured_thresh=-19.1:offset=-0.8"
+        /// Optional; NULL to disable. Add loudness normalization filter.
+        /// Ex: "I=-16:TP=-1.5:LRA=11:measured_I=-8.9:measured_LRA=5.2:measured_TP=1.1:measured_thresh=-19.1:offset=-0.8"
         public string? LoudnormSettings;
-        // Optional; NULL to disable. Add crossfeed filter. Ex: "0.5"
+        /// Optional; NULL to disable. Add crossfeed filter. Ex: "0.5"
         public string? CrossfeedSetting;
-        // Optional; NULL to disable.
-        // Used to insert your own audio filtergraph between the source `abuffer` and the `abuffersink`.
-        // Setting this to anything will override any `loudnorm`,`crossfeed`, or `equalizer` values. See filtergraph.c
-        //
-        // Note that `abuffersink` will always resample to the preferred format of the current audio device, so
-        // something like "aresample=44100, aformat=sample_fmts=s16:channel_layouts=stereo" would be pointless.
-        //
-        // Note 2, A new filtergraph is created for each call to au_play_audio() (or on_prepare_next),
-        // effectively setting this back to NULL.
-        //
-        // Filters can be found here https://ffmpeg.org/ffmpeg-filters.html
+        /// Optional; NULL to disable.
+        /// Used to insert your own audio filtergraph between the source `abuffer` and the `abuffersink`.
+        /// Setting this to anything will override any `loudnorm`,`crossfeed`, or `equalizer` values. See filtergraph.c
+        ///
+        /// Note that `abuffersink` will always resample to the preferred format of the current audio device, so
+        /// something like "aresample=44100, aformat=sample_fmts=s16:channel_layouts=stereo" would be pointless.
+        ///
+        /// Note 2, A new filtergraph is created for each call to au_play_audio() (or on_prepare_next),
+        /// effectively setting this back to NULL.
+        ///
+        /// Filters can be found here https://ffmpeg.org/ffmpeg-filters.html
         public string? AvFiltergraphOverride;
     }
 
     // Functions
     [LibraryImport(DllName, EntryPoint = "au_shutdown")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_shutdown();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_shutdown();
 
     [LibraryImport(DllName, EntryPoint = "au_initialize")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_initialize(InitializeConfig config);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static unsafe partial int au_initialize(InitializeConfigMarshaller.InitializeConfigUnmanaged* config);
+
+    [LibraryImport(DllName, EntryPoint = "au_configure_audio_device")]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static unsafe partial int au_configure_audio_device(AudioDeviceConfigMarshaller.AudioDeviceConfigUnmanaged* custom_config);
     
-    [LibraryImport(DllName, EntryPoint = "au_initialize")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_initialize(IntPtr nullConfig);
-
-    [LibraryImport(DllName, EntryPoint = "au_configure_audio_device")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_configure_audio_device(AudioDeviceConfig custom_config);
-
-    [LibraryImport(DllName, EntryPoint = "au_configure_audio_device")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_configure_audio_device(IntPtr nullConfig);
-
     [LibraryImport(DllName, EntryPoint = "au_play_audio", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_play_audio(string filename, PlayAudioConfig config);
-
-    [LibraryImport(DllName, EntryPoint = "au_play_audio", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_play_audio(string filename, IntPtr nullConfig);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static unsafe partial void au_play_audio(string filename, PlayAudioConfigMarshaller.PlayAudioConfigUnmanaged* config);
 
     [LibraryImport(DllName, EntryPoint = "au_stop_audio")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_stop_audio();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_stop_audio();
 
     [LibraryImport(DllName, EntryPoint = "au_pause_audio")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_pause_audio([MarshalAs(UnmanagedType.I1)] bool value);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_pause_audio([MarshalAs(UnmanagedType.I1)] bool value);
 
     [LibraryImport(DllName, EntryPoint = "au_seek_percent")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_seek_percent(double percentPos);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_seek_percent(double percentPos);
 
     [LibraryImport(DllName, EntryPoint = "au_seek_time")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_seek_time(long milliseconds); // int64_t
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_seek_time(long milliseconds); // int64_t
 
     [LibraryImport(DllName, EntryPoint = "au_set_audio_volume")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_set_audio_volume(int volume);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_set_audio_volume(int volume);
 
     [LibraryImport(DllName, EntryPoint = "au_get_audio_volume")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_get_audio_volume();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial int au_get_audio_volume();
 
     [LibraryImport(DllName, EntryPoint = "au_mute_audio")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_mute_audio([MarshalAs(UnmanagedType.I1)] bool value);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_mute_audio([MarshalAs(UnmanagedType.I1)] bool value);
 
     [LibraryImport(DllName, EntryPoint = "au_set_loop_count")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_set_loop_count(int loop_count);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_set_loop_count(int loop_count);
 
     [LibraryImport(DllName, EntryPoint = "au_get_loop_count")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial int au_get_loop_count();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial int au_get_loop_count();
 
     [LibraryImport(DllName, EntryPoint = "au_get_audio_play_time")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial double au_get_audio_play_time();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial double au_get_audio_play_time();
 
     [LibraryImport(DllName, EntryPoint = "au_get_audio_duration")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial double au_get_audio_duration();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial double au_get_audio_duration();
 
     [LibraryImport(DllName, EntryPoint = "au_wait_loop")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static partial void au_wait_loop();
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static partial void au_wait_loop();
 
     // int au_get_audio_devices(int *out_total, char ***out_devices);
     [LibraryImport(DllName, EntryPoint = "au_get_audio_devices")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-    internal static unsafe partial int au_get_audio_devices(int* out_total, sbyte*** out_devices);
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    private static unsafe partial int au_get_audio_devices(int* out_total, sbyte*** out_devices);
 
     [LibraryImport(DllName, EntryPoint = "au_set_equalizer")]
-    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.I1)]
-    internal static partial bool au_set_equalizer(EqualizerConfig values);
+    private static partial bool au_set_equalizer(EqualizerConfig values);
 
+    //Store callbacks to prevent GC from collecting them
+    // ReSharper disable NotAccessedField.Local
+    private static NotifyOfLog? _notifyOfLogCallback;
+    private static NotifyOfEndOfFile? _notifyOfEofCallback;
+    private static NotifyOfRestart? _notifyOfRestartCallback;
+    private static NotifyOfDurationUpdate? _notifyOfDurationUpdateCallback;
+    private static NotifyOfPrepareNext? _notifyOfPrepareNextCallback;
+    // ReSharper restore NotAccessedField.Local
+    
     // Public wrappers
-    public static int Initialize(InitializeConfig? cfg)
+    public static int Initialize(InitializeConfig cfg)
     {
-        return cfg.HasValue ? au_initialize(cfg.Value) : au_initialize(IntPtr.Zero);
+        _notifyOfLogCallback = cfg.OnLog;
+        _notifyOfEofCallback = cfg.OnEof;
+        _notifyOfRestartCallback = cfg.OnRestart;
+        _notifyOfDurationUpdateCallback = cfg.OnDurationUpdate;
+        _notifyOfPrepareNextCallback = cfg.OnPrepareNext;
+        
+        
+        var unmanagedConfig = InitializeConfigMarshaller.ConvertToUnmanaged(cfg);
+    
+        unsafe
+        {
+            try
+            {
+                return au_initialize(&unmanagedConfig);
+            }
+            finally
+            {
+                // Always clean up
+                InitializeConfigMarshaller.Free(unmanagedConfig);
+            }
+        }
     }
 
     public static int ConfigureAudioDevice(AudioDeviceConfig? cfg)
     {
-        return cfg.HasValue ? au_configure_audio_device(cfg.Value) : au_configure_audio_device(IntPtr.Zero);
-    }
+        if (!cfg.HasValue)
+        {
+            unsafe
+            {
+                return au_configure_audio_device(null);
+            }
+        }
 
+
+        var unmanagedConfig = AudioDeviceConfigMarshaller.ConvertToUnmanaged(cfg.Value);
+        
+        unsafe
+        {
+            try
+            {
+                
+                return au_configure_audio_device(&unmanagedConfig);
+            }
+            finally
+            {
+                // Always clean up
+                AudioDeviceConfigMarshaller.Free(unmanagedConfig);
+            }  
+        }
+    }
+    
+    
     public static void PlayAudio(string filename, PlayAudioConfig? cfg)
     {
-        if (cfg.HasValue)
+        if (!cfg.HasValue)
         {
-            au_play_audio(filename, cfg.Value);
+            unsafe
+            {
+                au_play_audio(filename, null);
+                return;
+            }
         }
-        else
+
+
+        var unmanagedConfig = PlayAudioConfigMarshaller.ConvertToUnmanaged(cfg.Value);
+        
+        unsafe
         {
-            au_play_audio(filename, IntPtr.Zero);
+            try
+            {
+                au_play_audio(filename, &unmanagedConfig);
+            }
+            finally
+            {
+                // Always clean up
+                PlayAudioConfigMarshaller.Free(unmanagedConfig);
+            }  
         }
     }
     
