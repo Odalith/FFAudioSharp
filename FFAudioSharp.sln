@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAudioSharp", "FFAudioShar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAudioSharp.Tests", "FFAudioSharp.Tests\FFAudioSharp.Tests.csproj", "{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistExample", "Examples\PlaylistExample\PlaylistExample.csproj", "{5C1A20D9-0CFD-462C-A503-DD163F217B5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F73AD03B-88B4-4A5F-AE2A-B65EE5746227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1A20D9-0CFD-462C-A503-DD163F217B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1A20D9-0CFD-462C-A503-DD163F217B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1A20D9-0CFD-462C-A503-DD163F217B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1A20D9-0CFD-462C-A503-DD163F217B5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
