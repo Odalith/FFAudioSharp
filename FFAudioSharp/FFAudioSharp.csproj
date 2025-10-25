@@ -14,6 +14,8 @@
         <PackageTags>audio media music playback ffmpeg sdl2</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageLicenseUrl>https://github.com/Odalith/FFaudio?tab=LGPL-2.1-1-ov-file</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/Odalith/FFAudioSharp</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
