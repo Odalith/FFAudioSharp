@@ -8,7 +8,7 @@
 
         <!-- NuGet-specific metadata -->
         <PackageId>Odalith.FFAudioSharp</PackageId>
-        <Version>1.0.4</Version>
+        <Version>1.0.5</Version>
         <Authors>Odalith</Authors>
         <Description>Play audio with FFmpeg and SDL2 in dotnet</Description>
         <PackageTags>audio media music playback ffmpeg sdl2</PackageTags>
