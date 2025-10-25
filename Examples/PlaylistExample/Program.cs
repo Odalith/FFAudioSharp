@@ -23,10 +23,13 @@ class Program
         // Get all files in the directory
         _filesToPlay = Directory.EnumerateFiles(FILE_SOURCE_DIR, "*.*", SearchOption.AllDirectories).ToList();
         
+        // Make sure we have files to play
+        if (_filesToPlay.Count == 0) return;
+        
         // Initialize FFAudio with struct. Take note of the callbacks `OnLog` `NotifyOfEndOfFile`, especially the latter
         var init = new FFAudio.InitializeConfig
         {
-            AppName = "PlayPlaylist_ShouldPlayAllFiles",
+            AppName = "PlaylistExample",
             InitialLoopCount = 0,
             InitialVolume = 50,
             OnLog = NotifyOfLog,
@@ -42,9 +45,6 @@ class Program
         
         // Configure an audio device. This is *required* before calling `PlayAudio`
         if (FFAudio.ConfigureAudioDevice(null) < 0) return;
-        
-        // Make sure we have files to play
-        if (_filesToPlay.Count == 0) return;
         
         // Play the first file. The rest of the files are played in the callback `NotifyOfEndOfFile`
         var file = _filesToPlay.ElementAt(_fileIndex);
