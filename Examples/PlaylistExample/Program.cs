@@ -7,7 +7,7 @@ class Program
     /// <summary>
     /// Set this to the directory containing the files you want to play.
     /// </summary>
-    private const string FILE_SOURCE_DIR = "/home/malkj/Downloads/All of them";
+    private const string FILE_SOURCE_DIR = "";
     /// <summary>
     /// How many files to play before quitting.
     /// </summary>
