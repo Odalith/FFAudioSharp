@@ -8,7 +8,7 @@
 
         <!-- NuGet-specific metadata -->
         <PackageId>Odalith.FFAudioSharp</PackageId>
-        <Version>1.0.5</Version>
+        <Version>1.0.6</Version>
         <Authors>Odalith</Authors>
         <Description>Play audio with FFmpeg and SDL2 in dotnet</Description>
         <PackageTags>audio media music playback ffmpeg sdl2</PackageTags>
@@ -16,6 +16,7 @@
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <PackageLicenseUrl>https://github.com/Odalith/FFaudio?tab=LGPL-2.1-1-ov-file</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/Odalith/FFAudioSharp</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/Odalith/FFAudioSharp/blob/master/Assets/FFaudio64.png</PackageIconUrl>
     </PropertyGroup>
 
     <ItemGroup>
