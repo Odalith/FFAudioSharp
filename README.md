@@ -1,3 +1,5 @@
+<img width="1815" height="150" alt="banner" src="https://github.com/user-attachments/assets/46466334-645f-4585-a24c-55f315cc892c" />
+
 The C# bindings for [FFaudio](https://github.com/Odalith/FFaudio)
 
 ### FFaudio is a high-level audio player library using FFmpeg & SDL2. 
